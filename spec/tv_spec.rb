@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'vcr'
 
 describe Tmdb::TV do
-
   before(:all) do
     Tmdb::Api.key(TmdbDefaultApiKey)
     Tmdb::Api.language(TmdbDefaultLanguage)
@@ -27,6 +26,7 @@ describe Tmdb::TV do
   it { is_expected.to respond_to(:posters) }
   it { is_expected.to respond_to(:keywords) }
   it { is_expected.to respond_to(:similar) }
+  it { is_expected.to respond_to(:recommendations) }
   it { is_expected.to respond_to(:translations) }
   it { is_expected.to respond_to(:videos) }
   it { is_expected.to respond_to(:latest) }
@@ -223,6 +223,18 @@ describe Tmdb::TV do
     end
   end
 
+  context '#recommendations' do
+    let(:recommendations) do
+      VCR.use_cassette 'tv/recommendations' do
+        Tmdb::TV.recommendations(1396)
+      end
+    end
+
+    subject { recommendations }
+
+    it { expect(subject).to be_an_instance_of(Tmdb::Recommendation) }
+  end
+
   context '#translations' do
     let(:translations) do
       VCR.use_cassette 'tv/translations' do
@@ -348,5 +360,4 @@ describe Tmdb::TV do
       expect(subject.results.sample).to be_an_instance_of(Tmdb::TV)
     end
   end
-
 end
