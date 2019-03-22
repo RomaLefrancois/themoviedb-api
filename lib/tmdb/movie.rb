@@ -71,11 +71,11 @@ module Tmdb
       end
     end
 
-    def self.releases(id, filters={})
-      result = Resource.new("/movie/#{id}/releases", filters).get
+    def self.release_dates(id, filters={})
+      result = Resource.new("/movie/#{id}/release_dates", filters).get
 
-      result['countries'].map do |entry|
-        Release.new(entry)
+      result['results'].map do |entry|
+        ReleaseDates.new(entry)
       end
     end
 

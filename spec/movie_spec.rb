@@ -25,7 +25,7 @@ describe Tmdb::Movie do
   it { is_expected.to respond_to(:posters) }
   it { is_expected.to respond_to(:videos) }
   it { is_expected.to respond_to(:keywords) }
-  it { is_expected.to respond_to(:releases) }
+  it { is_expected.to respond_to(:release_dates) }
   it { is_expected.to respond_to(:translations) }
   it { is_expected.to respond_to(:similar) }
   it { is_expected.to respond_to(:reviews) }
@@ -189,18 +189,18 @@ describe Tmdb::Movie do
     end
   end
 
-  context '#releases' do
-    let(:releases) do
-      VCR.use_cassette 'movie/releases' do
-        Tmdb::Movie.releases(550)
+  context '#release_dates' do
+    let(:release_dates) do
+      VCR.use_cassette 'movie/release_dates' do
+        Tmdb::Movie.release_dates(550)
       end
     end
 
-    subject { releases }
+    subject { release_dates }
 
-    it 'should return an array of Tmdb::Release' do
+    it 'should return an array of Tmdb::ReleaseDates' do
       expect(subject).to be_an_instance_of(Array)
-      expect(subject.sample).to be_an_instance_of(Tmdb::Release)
+      expect(subject.sample).to be_an_instance_of(Tmdb::ReleaseDates)
     end
   end
 
