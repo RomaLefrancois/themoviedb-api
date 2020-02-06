@@ -39,6 +39,11 @@ module Tmdb
       end
     end
 
+    def self.external_ids(id, filters = {})
+      result = Resource.new("/movie/#{id}/external_ids", filters).get
+      new(result)
+    end
+
     def self.backdrops(id, filters={})
       result = Resource.new("/movie/#{id}/images", filters).get
 

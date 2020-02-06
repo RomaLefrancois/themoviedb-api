@@ -20,6 +20,7 @@ describe Tmdb::Movie do
   it { is_expected.to respond_to(:alternative_titles) }
   it { is_expected.to respond_to(:cast) }
   it { is_expected.to respond_to(:crew) }
+  it { is_expected.to respond_to(:external_ids) }
   it { is_expected.to respond_to(:director) }
   it { is_expected.to respond_to(:backdrops) }
   it { is_expected.to respond_to(:posters) }
@@ -112,6 +113,18 @@ describe Tmdb::Movie do
       expect(subject).to be_an_instance_of(Array)
       expect(subject.sample).to be_an_instance_of(Tmdb::Person)
     end
+  end
+
+  context '#external_ids' do
+    let(:external_ids) do
+      VCR.use_cassette 'movie/external_ids' do
+        Tmdb::Movie.external_ids(1396)
+      end
+    end
+
+    subject { external_ids }
+
+    it { expect(subject).to be_an_instance_of(Tmdb::Movie) }
   end
 
   context '#director' do
